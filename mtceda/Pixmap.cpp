@@ -118,6 +118,31 @@ void Pixmap::Load(const char* filePath)
 
 void Pixmap::Save(const char* path)
 {
+    std::ofstream outStream(path, std::ios_base::binary);
+
+    //Print out the header.
+    outStream
+        << "P6" << std::endl
+        << this->m_width << " " << this->m_height << std::endl
+        << this->m_colorDepth << std::endl;
+        
+    for (int x = 0; x < this->m_height; x++)
+    {
+        for (int y = 0; y < this->m_width; y++)
+        {
+            PixmapPixel pmPixel = this->GetPixel(x, y);
+            unsigned char r = pmPixel.R;
+            unsigned char g = pmPixel.G;
+            unsigned char b = pmPixel.B;
+
+            std::cout << r << g << b << std::endl;
+
+            /*outStream
+                << this->GetPixel(x, y).R
+                << this->GetPixel(x, y).G
+                << this->GetPixel(x, y).B;*/
+        }
+    }
 }
 
 inline void Pixmap::SetDimensions(
@@ -144,5 +169,7 @@ inline void Pixmap::SetPixel(
 inline PixmapPixel Pixmap::GetPixel(
     const unsigned int x, const unsigned int y)
 {
-    return this->m_matrix[x][y];
+    PixmapPixel p = this->m_matrix[x][y];
+
+    return p;
 }

@@ -8,6 +8,8 @@ int main()
 
     Pixmap map = Pixmap();
     map.Load("../samples/nhlstenden.ppm");
+    map.Save("../samples/nhlstenden2.ppm");
+
 
     
     std::cin.get();
