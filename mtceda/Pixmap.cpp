@@ -138,11 +138,11 @@ inline void Pixmap::SetPixel(
     const unsigned int x, const unsigned int y, 
     const PixmapPixel& pixel)
 {
-    this->m_matrix.Set(x, y, pixel);
+    this->m_matrix[x][y] = pixel;
 }
 
 inline PixmapPixel Pixmap::GetPixel(
     const unsigned int x, const unsigned int y)
 {
-    return this->m_matrix.Get(x, y);
+    return this->m_matrix[x][y];
 }

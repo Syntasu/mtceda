@@ -1,13 +1,9 @@
 #ifndef MATRIX_H
 #define MATRIX_H
 
-#include "Std.h"
-
 template<class T>
 class Matrix
 {
-    typedef std::vector<std::vector<T>> value_array;
-
 public:
     Matrix()
     {
@@ -18,23 +14,19 @@ public:
     Matrix(const unsigned int cols, const unsigned int rows)
         : m_rows(rows), m_cols(cols)
     {
-        for (int i = 0; i < rows; i++)
+        m_values = new T*[rows];
+
+        for (int x = 0; x < rows; x++)
         {
-            for (int j = 0; j < cols; j++)
-            {
-                m_values[i][j] = {};
-            }
+            m_values[x] = new T[cols];
         }
+
+        return;
     }
 
-    T Get(const int x, const int y)
+    T* operator[] (const int index)
     {
-        return m_values[x][y];
-    }
-
-    void Set(const int x, const int y, T value)
-    {
-        m_values[x][y] = value;
+        return m_values[index];
     }
 
     const int Width() {
@@ -47,7 +39,7 @@ public:
 
 private:
     unsigned short m_rows, m_cols;
-    value_array m_values;
+    T** m_values;
 };
 
 #endif
