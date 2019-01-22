@@ -1,43 +1,53 @@
 #ifndef MATRIX_H
 #define MATRIX_H
 
+#include "Std.h"
+
 template<class T>
 class Matrix
 {
+    typedef std::vector<std::vector<T>> value_array;
+
 public:
-    Matrix(const unsigned short cols, const unsigned short rows)
+    Matrix()
     {
-        this->m_rows = rows;
-        this->m_cols = cols;
+        this->m_rows = 0;
+        this->m_cols = 0;
+    }
 
-        //Initialize the matrix with zero values.
-        //  So we don't take a stroll down undefined behaviour land.
-        this->m_values = new T*[this->m_rows];
-
-        for (int i = 0; i < this->m_rows; i++)
+    Matrix(const unsigned int cols, const unsigned int rows)
+        : m_rows(rows), m_cols(cols)
+    {
+        for (int i = 0; i < rows; i++)
         {
-            this->m_values[i] = new T[cols];
+            for (int j = 0; j < cols; j++)
+            {
+                m_values[i][j] = {};
+            }
         }
     }
 
-    ~Matrix()
+    T Get(const int x, const int y)
     {
-        //Clean each row.
-        for (int i = 0; i < this->m_rows; i++)
-        {
-            delete[] this->m_values[i];
-        }
-
-        //Delete the entire (by now empty) matrix.
-        delete[] this->m_values;
+        return m_values[x][y];
     }
 
-    int Width() { return m_cols; }
-    int Height() { return m_rows; }
+    void Set(const int x, const int y, T value)
+    {
+        m_values[x][y] = value;
+    }
+
+    const int Width() {
+        return m_cols; 
+    }
+
+    const int Height() { 
+        return m_rows; 
+    }
 
 private:
     unsigned short m_rows, m_cols;
-    T** m_values;
+    value_array m_values;
 };
 
 #endif
